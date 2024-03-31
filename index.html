@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Music Picks For You</title>
+	<style type="text/css">
+		body, html {
+			width: 100%;
+			height: 100%;
+			background-color: #303030;
+			background-image: url('https://img.freepik.com/free-vector/glowing-musical-pentagram-background-with-sound-notes_1017-31220.jpg');
+			background-position: center;
+			background-size: cover;
+			color: white;
+			font-family: sans-serif;
+			padding: 1px;
+			margin: 0px;
+		}
+		/*#outputDiv, #inputDiv {
+			background-color: rgba(0, 0, 0, 0.3);
+		}*/
+		div {
+			background-color: rgba(0, 0, 0, 0.3);
+		}
+		.musiccontainer {
+			/*border: 1px solid #404040;*/
+			display: inline-block;
+			margin: 3px;
+			padding: 5px;
+			width: 250px;
+			height: 100px;
+		}
+		.musictitle, .playmusicbuttons {
+			margin: 3px;
+			padding: 5px;
+		}
+		.playbuttons {
+			margin: 3px;
+			padding: 5px;
+			width: 98%;
+		}
+		.score {
+			font-size: 70%;
+		}
+		.musictitle {
+			font-size: 110%;
+			height: 50px;
+		}
+		#outputDiv {
+			text-align: center;
+		}
+		#inputbox, #go {
+			/*background-color: rgba(0, 0, 0, 0.3);*/
+			background-color: transparent;
+			color: white;
+			font-size: 115%;
+			font-family: sans-serif;
+			border-radius: 15px;
+			padding: 5px;
+			margin: 3px;
+			border: 1px solid grey;
+			width: 45%;
+			padding-left: 15px;
+		}
+		#go {
+			width: 10%;
+		}
+		#inputDiv {
+			margin: 3px;
+			padding: 3px;
+			text-align: center;
+		}
+		.pagetitle2 {
+			display: inline-block;
+			font-size: 175%;
+			padding-bottom: -5px;
+			margin-bottom: -5px;
+		}
+	</style>
+</head>
+<body>
+	<div id="inputDiv"><p class="pagetitle2"><b>Music Picks 4 U</b></p><input id="inputbox" /><input id="go" type="button" value="GO" onclick="processInput(inputbox.value)" /></div>
+	<div id="outputDiv"></div>
+	<script src="SongData.js"></script>
+	<script src="WordsCollectionInSongs.js"></script>
+	<script type="text/javascript">
+		// songsData
+		// songTitles
+		
+// function pearsonCorrelation(x, y) {
+//   let n = x.length;
+//   let sumX = 0, sumY = 0, sumXY = 0, sumX2 = 0, sumY2 = 0;
+
+//   for (let i = 0; i < n; i++) {
+//     sumX += x[i];
+//     sumY += y[i];
+//     sumXY += (x[i] * y[i]);
+//     sumX2 += (x[i] * x[i]);
+//     sumY2 += (y[i] * y[i]);
+//   }
+
+//   let numerator = (n * sumXY) - (sumX * sumY);
+//   let denominator = Math.sqrt((n * sumX2 - sumX * sumX) * (n * sumY2 - sumY * sumY));
+
+//   if (denominator === 0) return 0; // To avoid division by zero
+
+//   return numerator / denominator;
+// }
+
+function pearsonCorrelation(x, y) {
+  let n = x.length;
+  let sumX = 0, sumY = 0, sumXY = 0, sumX2 = 0, sumY2 = 0;
+
+  var meanX = 0, meanY = 0;
+  for (xi=0; xi<x.length; xi++) {meanX += x[xi];}
+  var meanX = meanX/x.length;
+  for (yi=0; yi<y.length; yi++) {meanY += y[yi];}
+  var meanY = meanY/y.length;
+
+  for (let i = 0; i < n; i++) {
+    sumX += x[i];
+    sumY += y[i];
+    sumXY += ((x[i] - meanX) * (y[i] - meanY));
+    sumX2 += ((x[i] - meanX) * (x[i] - meanX));
+    sumY2 += ((y[i] - meanY) * (y[i] - meanY));
+  }
+
+  let numerator = sumXY;
+  let denominator = Math.sqrt(sumX2 * sumY2);
+
+  if (denominator === 0) return 0; // To avoid division by zero
+
+  return numerator / denominator;
+}
+
+function levenshteinDistance(s1, s2) {
+  const len1 = s1.length;
+  const len2 = s2.length;
+  const dp = Array.from({ length: len1 + 1 }, () => Array(len2 + 1).fill(0));
+
+  for (let i = 0; i <= len1; i++) {
+    for (let j = 0; j <= len2; j++) {
+      if (i === 0) {
+        dp[i][j] = j; // A base case for when s1 is empty
+      } else if (j === 0) {
+        dp[i][j] = i; // A base case for when s2 is empty
+      } else if (s1[i - 1] === s2[j - 1]) {
+        dp[i][j] = dp[i - 1][j - 1]; // Characters match
+      } else {
+        dp[i][j] = 1 + Math.min(
+          dp[i - 1][j],    // Deletion
+          dp[i][j - 1],    // Insertion
+          dp[i - 1][j - 1] // Substitution
+        );
+      }
+    }
+  }
+
+  return dp[len1][len2];
+}
+
+		function processInput(a) {
+			var namesObj = {}
+			for (w=0; w<songTitles.length; w++) {
+				var currentTitle = songTitles[w];
+				namesObj[currentTitle] = levenshteinDistance(currentTitle.toLowerCase(), a.toLowerCase());
+			}
+			const sortedNames = Object.entries(namesObj).sort((a, b) => a[1] - b[1]);
+			var name = sortedNames[0][0];
+			inputbox.value = name;
+			// alert('Name Done: '+name);
+
+			var songsCor = {};
+			var n = 0;
+			Object.entries(songsData).forEach(([key, value]) => {
+				// if (key != inputbox.value) {
+  					// console.log(key, value);
+  					var currentPearsonCor = pearsonCorrelation(value, songsData[inputbox.value]);
+  					if (currentPearsonCor > 0.99) {songsCor[key] = currentPearsonCor; var n = n + 1};
+				// }
+			});
+			const sortedSongsCor = Object.entries(songsCor).sort((a, b) => b[1] - a[1]);
+			// console.log(sortedSongsCor);
+
+			var outputString = '';
+			if (sortedSongsCor.length < 30) {var len = sortedSongsCor.length} else {var len = 30}
+			for (s=0; s<len; s++) {
+				// var outputString = outputString + '<div class="musiccontainer"><div class="musictitle">'+sortedSongsCor[s][0]+' <p class="score">'+sortedSongsCor[s][1]+'</p></div><div class="playmusicbuttons"><button class="playbuttons" onclick="window.open(\'https://www.google.com/search?q=play+'+sortedSongsCor[s][0].replace(/ /g, '+')+'+youtube&btnI\', target=\'_blank\')">Play Song</button></div></div>'
+				var outputString = outputString + '<div class="musiccontainer"><div class="musictitle">'+sortedSongsCor[s][0]+'</div><div class="playmusicbuttons"><button class="playbuttons" onclick="window.open(\'https://www.google.com/search?q=play+'+sortedSongsCor[s][0].replace(/ /g, '+').replace(/\'/g, '\\\'')+'&btnI\', target=\'_blank\')">Play Song</button></div></div>'
+			}
+
+			// outputDiv.innerHTML = sortedSongsCor;
+			outputDiv.innerHTML = outputString;
+		}
+	</script>
+</body>
+</html>
