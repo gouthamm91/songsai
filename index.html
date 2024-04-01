@@ -54,7 +54,7 @@
 		#outputDiv {
 			text-align: center;
 		}
-		#inputbox, #go {
+		#inputbox, #go, #lang {
 			/*background-color: rgba(0, 0, 0, 0.3);*/
 			background-color: transparent;
 			color: white;
@@ -87,7 +87,7 @@
 <body>
 	<div id="inputDiv"><p class="pagetitle2"><b>🎵Music Picks 4 U</b></p>
 		<select id="lang"><option value="en">English</option><option value="ta">Tamil</option></select>
-		<input id="inputbox" onchange="mainProcess(inputbox.value, lang.value)" />
+		<input id="inputbox" onchange="mainProcess(inputbox.value)" />
 	</div>
 	<div id="outputDiv"></div>
 	<script src="TamilSongData.js"></script>
@@ -170,7 +170,8 @@ function levenshteinDistance(s1, s2) {
   return dp[len1][len2];
 }
 
-		function mainProcess(a, l) {
+		function mainProcess(a) {
+			var l = document.getElementById('lang').innerHTML;
 			if (l.toLowerCase().indexOf('ta') > -1) {
 				processTamilInput(a);
 			} else {
