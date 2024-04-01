@@ -181,24 +181,24 @@ function levenshteinDistance(s1, s2) {
 			}
 		}
 
-			word = '';
-			for (tw=0; tw<songTitles.length; tw++) {word = word + ' ' + songTitles[tw];}
-			word = word.split(' ');
+			// word = '';
+			// for (tw=0; tw<songTitles.length; tw++) {word = word + ' ' + songTitles[tw];}
+			// word = word.split(' ');
 
 		function processInput(a) {
 
-			var correctA = '';
-			for (ai=0; ai<a.trim().split(' ').length; ai++) {
-				var wordsObj = {}
-				for (wi=0; wi<word.length; wi++) {
-					var currentWord = a.trim().split(' ')[ai];
-					wordsObj[currentWord] = levenshteinDistance(currentWord.toLowerCase(), word[wi].toLowerCase());
-				}
-				var sortedWords = Object.entries(wordsObj).sort((a, b) => a[1] - b[1]);
-				console.log(sortedWords);
-				var correctA = correctA + sortedWords[0][0] + ' ';
-			}
-			var a = correctA.trim()
+			// var correctA = '';
+			// for (ai=0; ai<a.trim().split(' ').length; ai++) {
+			// 	var wordsObj = {}
+			// 	for (wi=0; wi<word.length; wi++) {
+			// 		var currentWord = a.trim().split(' ')[ai];
+			// 		wordsObj[currentWord] = levenshteinDistance(currentWord.toLowerCase(), word[wi].toLowerCase());
+			// 	}
+			// 	var sortedWords = Object.entries(wordsObj).sort((a, b) => a[1] - b[1]);
+			// 	console.log(sortedWords);
+			// 	var correctA = correctA + sortedWords[0][0] + ' ';
+			// }
+			// var a = correctA.trim()
 
 			var namesObj = {}
 			for (w=0; w<songTitles.length; w++) {
@@ -233,23 +233,23 @@ function levenshteinDistance(s1, s2) {
 			outputDiv.innerHTML = outputString;
 		}
 
-			wordTamil = '';
-			for (tw=0; tw<tamilSongsWords.length; tw++) {wordTamil = wordTamil + ' ' + tamilSongsWords[tw];}
-			wordTamil = wordTamil.split(' ');
+			// wordTamil = '';
+			// for (tw=0; tw<tamilSongsWords.length; tw++) {wordTamil = wordTamil + ' ' + tamilSongsWords[tw];}
+			// wordTamil = wordTamil.split(' ');
 
 		function processTamilInput(a) {
 
-			var correctA = '';
-			for (ai=0; ai<a.trim().split(' ').length; ai++) {
-				var wordsObj = {}
-				for (wi=0; wi<wordTamil.length; wi++) {
-					var currentWord = a.trim().split(' ')[ai];
-					wordsObj[currentWord] = levenshteinDistance(currentWord.toLowerCase(), wordTamil[wi].toLowerCase());
-				}
-				var sortedWords = Object.entries(wordsObj).sort((a, b) => a[1] - b[1]);
-				var correctA = correctA + sortedWords[0][0] + ' ';
-			}
-			var a = correctA.trim()
+			// var correctA = '';
+			// for (ai=0; ai<a.trim().split(' ').length; ai++) {
+			// 	var wordsObj = {}
+			// 	for (wi=0; wi<wordTamil.length; wi++) {
+			// 		var currentWord = a.trim().split(' ')[ai];
+			// 		wordsObj[currentWord] = levenshteinDistance(currentWord.toLowerCase(), wordTamil[wi].toLowerCase());
+			// 	}
+			// 	var sortedWords = Object.entries(wordsObj).sort((a, b) => a[1] - b[1]);
+			// 	var correctA = correctA + sortedWords[0][0] + ' ';
+			// }
+			// var a = correctA.trim()
 
 			var namesObj = {}
 			for (w=0; w<tamilSongsWords.length; w++) {
