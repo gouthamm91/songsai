@@ -182,7 +182,7 @@ function levenshteinDistance(s1, s2) {
 		}
 
 			word = '';
-			for (tw=0; tw<songsWords.length; tw++) {word = word + ' ' + songsWords;}
+			for (tw=0; tw<songsWords.length; tw++) {word = word + ' ' + songsWords[tw];}
 			word = word.split(' ');
 
 		function processInput(a) {
@@ -234,7 +234,7 @@ function levenshteinDistance(s1, s2) {
 		}
 
 			wordTamil = '';
-			for (tw=0; tw<tamilSongsWords.length; tw++) {wordTamil = wordTamil + ' ' + tamilSongsWords;}
+			for (tw=0; tw<tamilSongsWords.length; tw++) {wordTamil = wordTamil + ' ' + tamilSongsWords[tw];}
 			wordTamil = wordTamil.split(' ');
 
 		function processTamilInput(a) {
