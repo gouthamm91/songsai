@@ -195,6 +195,7 @@ function levenshteinDistance(s1, s2) {
 					wordsObj[currentWord] = levenshteinDistance(currentWord.toLowerCase(), word[wi].toLowerCase());
 				}
 				var sortedWords = Object.entries(wordsObj).sort((a, b) => a[1] - b[1]);
+				console.log(sortedWords);
 				var correctA = correctA + sortedWords[0][0] + ' ';
 			}
 			var a = correctA.trim()
