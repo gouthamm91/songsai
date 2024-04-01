@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<meta charset="UTF-8">
 	<title>Music Picks For You</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<style type="text/css">
@@ -84,8 +85,13 @@
 	</style>
 </head>
 <body>
-	<div id="inputDiv"><p class="pagetitle2"><b>🎵Music Picks 4 U</b></p><input id="inputbox" onchange="processInput(inputbox.value)" /></div>
+	<div id="inputDiv"><p class="pagetitle2"><b>🎵Music Picks 4 U</b></p>
+		<select id="lang"><option value="en">English</option><option value="ta">Tamil</option></select>
+		<input id="inputbox" onchange="mainProcess(inputbox.value, lang.value)" />
+	</div>
 	<div id="outputDiv"></div>
+	<script src="TamilSongData.js"></script>
+	<script src="TamilWordsCollectionInSongs.js"></script>
 	<script src="SongData.js"></script>
 	<script src="WordsCollectionInSongs.js"></script>
 	<script type="text/javascript">
@@ -164,6 +170,16 @@ function levenshteinDistance(s1, s2) {
   return dp[len1][len2];
 }
 
+		function mainProcess(a, l) {
+			if (l.toLowerCase().indexOf('ta') > -1) {
+				processTamilInput(a);
+			} else {
+				if (l.toLowerCase().indexOf('en') > -1) {
+					processInput(a);
+				}
+			}
+		}
+
 		function processInput(a) {
 			var namesObj = {}
 			for (w=0; w<songTitles.length; w++) {
@@ -197,6 +213,41 @@ function levenshteinDistance(s1, s2) {
 			// outputDiv.innerHTML = sortedSongsCor;
 			outputDiv.innerHTML = outputString;
 		}
+
+		function processTamilInput(a) {
+			var namesObj = {}
+			for (w=0; w<tamilSongsWords.length; w++) {
+				var currentTitle = tamilSongsWords[w];
+				namesObj[currentTitle] = levenshteinDistance(currentTitle.toLowerCase(), a.toLowerCase());
+			}
+			const sortedNames = Object.entries(namesObj).sort((a, b) => a[1] - b[1]);
+			var name = sortedNames[0][0];
+			inputbox.value = name;
+			// alert('Name Done: '+name);
+
+			var songsCor = {};
+			var n = 0;
+			Object.entries(tamilSongsData).forEach(([key, value]) => {
+				// if (key != inputbox.value) {
+  					// console.log(key, value);
+  					var currentPearsonCor = pearsonCorrelation(value, tamilSongsData[inputbox.value]);
+  					if (currentPearsonCor > 0.80) {songsCor[key] = currentPearsonCor; var n = n + 1};
+				// }
+			});
+			const sortedSongsCor = Object.entries(songsCor).sort((a, b) => b[1] - a[1]);
+			// console.log(sortedSongsCor);
+
+			var outputString = '';
+			if (sortedSongsCor.length < 30) {var len = sortedSongsCor.length} else {var len = 30}
+			for (s=0; s<len; s++) {
+				// var outputString = outputString + '<div class="musiccontainer"><div class="musictitle">'+sortedSongsCor[s][0]+' <p class="score">'+sortedSongsCor[s][1]+'</p></div><div class="playmusicbuttons"><button class="playbuttons" onclick="window.open(\'https://www.google.com/search?q=play+'+sortedSongsCor[s][0].replace(/ /g, '+')+'+youtube&btnI\', target=\'_blank\')">Play Song</button></div></div>'
+				var outputString = outputString + '<div class="musiccontainer"><div class="musictitle">'+eng2tamil[sortedSongsCor[s][0]]+'</div><div class="playmusicbuttons"><button class="playbuttons" onclick="window.open(\'https://www.google.com/search?q=play+'+eng2tamil[sortedSongsCor[s][0]]+'&btnI\', target=\'_blank\')">Play Song</button></div></div>'
+			}
+
+			// outputDiv.innerHTML = sortedSongsCor;
+			outputDiv.innerHTML = outputString;
+		}
+
 	</script>
 </body>
 </html>
