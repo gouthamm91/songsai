@@ -84,7 +84,7 @@
 		}
 	</style>
 </head>
-<body>
+<body onload="mainProcess(inputbox.value)">
 	<div id="inputDiv"><p class="pagetitle2"><b>🎵Music Picks 4 U</b></p>
 		<select id="lang"><option value="en">English</option><option value="ta">Tamil</option></select>
 		<input id="inputbox" onchange="mainProcess(inputbox.value)" />
@@ -215,7 +215,8 @@ function levenshteinDistance(s1, s2) {
 			Object.entries(songsData).forEach(([key, value]) => {
 				// if (key != inputbox.value) {
   					// console.log(key, value);
-  					var currentPearsonCor = pearsonCorrelation(value, songsData[inputbox.value]);
+  					// var currentPearsonCor = pearsonCorrelation(value, songsData[inputbox.value]);
+  					var currentPearsonCor = pearsonCorrelation(value, songsData[name]);
   					if (currentPearsonCor > 0.99) {songsCor[key] = currentPearsonCor; var n = n + 1};
 				// }
 			});
@@ -258,7 +259,7 @@ function levenshteinDistance(s1, s2) {
 			}
 			const sortedNames = Object.entries(namesObj).sort((a, b) => a[1] - b[1]);
 			var name = sortedNames[0][0];
-			inputbox.value = name.replace(/a்/g, '');
+			// inputbox.value = name.replace(/a்/g, '');
 			// alert('Name Done: '+name);
 
 			var songsCor = {};
@@ -266,7 +267,8 @@ function levenshteinDistance(s1, s2) {
 			Object.entries(tamilSongsData).forEach(([key, value]) => {
 				// if (key != inputbox.value) {
   					// console.log(key, value);
-  					var currentPearsonCor = pearsonCorrelation(value, tamilSongsData[inputbox.value]);
+  					// var currentPearsonCor = pearsonCorrelation(value, tamilSongsData[inputbox.value]);
+  					var currentPearsonCor = pearsonCorrelation(value, tamilSongsData[name]);
   					if (currentPearsonCor > 0.80) {songsCor[key] = currentPearsonCor; var n = n + 1};
 				// }
 			});
