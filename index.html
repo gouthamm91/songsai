@@ -87,7 +87,7 @@
 </head>
 <body>
 	<div id="inputDiv"><p class="pagetitle2"><b>🎵Music Picks 4 U</b></p>
-		<select id="lang"><option value="en">English</option><option value="ta">Tamil</option></select>
+		<select id="lang" onchange="mainProcess(inputbox.value)"><option value="en">English</option><option value="ta">Tamil</option></select>
 		<input id="inputbox" onchange="mainProcess(inputbox.value)" />
 	</div>
 	<div id="outputDiv"></div>
