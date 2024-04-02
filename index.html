@@ -84,7 +84,7 @@
 		}
 	</style>
 </head>
-<body onload="mainProcess(inputbox.value)">
+<body>
 	<div id="inputDiv"><p class="pagetitle2"><b>🎵Music Picks 4 U</b></p>
 		<select id="lang"><option value="en">English</option><option value="ta">Tamil</option></select>
 		<input id="inputbox" onchange="mainProcess(inputbox.value)" />
@@ -286,6 +286,7 @@ function levenshteinDistance(s1, s2) {
 			outputDiv.innerHTML = outputString;
 		}
 
+		mainProcess(inputbox.value)
 	</script>
 </body>
 </html>
